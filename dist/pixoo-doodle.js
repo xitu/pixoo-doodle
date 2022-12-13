@@ -1,6 +1,6 @@
 // src/doodle.js
 var PixooDoodle = class {
-  constructor({ host = "http://localhost:9527", width = 64, height = 64, options = {} } = {}) {
+  constructor({ host = "http://localhost:9527", width = 64, height = 64, ...options } = {}) {
     this._host = host;
     this._updateDelay = 0;
     this._context = new OffscreenCanvas(width, height).getContext("2d", { willReadFrequently: true, ...options });

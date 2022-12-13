@@ -6,12 +6,12 @@ html, body {
   background: #ddd;
 }
 canvas {
-  width: 400px;
-  height: 400px;
+  width: 640px;
+  height: 640px;
 }
 </style>
-<canvas width="1280" height="720"></canvas>
-<canvas id="shadow" width="1280" height="720"></canvas>
+<canvas width="640" height="640"></canvas>
+<canvas id="shadow" width="64" height="64"></canvas>
 <script type="text/shader">
   #pragma textureCube https://p4.ssl.qhimg.com/t01eb48da1b3e7c8de4.jpg
   #pragma textureCube https://p1.ssl.qhimg.com/t01a365f7cfc83ebbb3.jpg
@@ -81,15 +81,17 @@ canvas {
     const shadow = document.querySelector('#shadow');
     let frames = 0;
     setInterval(() => {
+      const shadowCtx = shadow.getContext('2d');
+      shadowCtx.drawImage(canvas, 0, 0, 64, 64);
       if(frames < 60) {
-        doodle.appendAnimationFrame(canvas, 100);
+        console.log(frames);
+        doodle.appendAnimationFrame(shadow, 100);
         frames++;
         if(frames === 60) {
           console.log('sending...');
           doodle.playAnimation();
         }
       }
-      shadow.getContext('2d').drawImage(canvas, 0, 0);
     }, 100);
   }());
 </script>

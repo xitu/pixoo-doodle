@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script type="module">
+    import PixooDoodle from './pixoo-doodle.js';
+    const doodle = new PixooDoodle();
+
+    const ctx = new OffscreenCanvas(doodle.width, doodle.height).getContext('2d');
+    
+    ctx.fillStyle = 'white';
+    ctx.font = '32px Arial';
+    for(let i = 0; i < 60; i++) {
+      ctx.clearRect(0, 0, 64, 64);
+      ctx.fillText(i, 16, 32);
+      doodle.appendAnimationFrame(ctx.canvas, 200);
+    }
+    doodle.playAnimation();
+
+    window.doodle = doodle;
+  </script>
+</body>
+</html>
