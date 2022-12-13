@@ -10,10 +10,18 @@
   <script type="module">
     import PixooDoodle from './pixoo-doodle.js';
     const doodle = new PixooDoodle();
-    const ctx = doodle.context;
 
+    const ctx = new OffscreenCanvas(doodle.width, doodle.height).getContext('2d');
     ctx.fillStyle = 'yellow';
     ctx.fillRect(0, 0, 16, 16);
+    doodle.appendAnimationFrame(ctx.canvas, 500);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(0, 0, 16, 16);
+    doodle.appendAnimationFrame(ctx.canvas, 500);
+    ctx.fillStyle = 'blue';
+    ctx.fillRect(0, 0, 16, 16);
+    doodle.appendAnimationFrame(ctx.canvas, 500);
+    doodle.playAnimation();
 
     window.doodle = doodle;
   </script>

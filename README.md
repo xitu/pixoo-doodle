@@ -17,15 +17,29 @@ npm run server --host 192.168.0.5
 服务启动之后，就可以直接创建设备对象，获取context进行绘制了。
 
 ```js
-import PixooDoodle from 'pixoo-doodle';
+import PixooDoodle from './pixoo-doodle.js';
 const doodle = new PixooDoodle();
+const ctx = doodle.context;
 
-const ctx = doodle.animationBegin();
 ctx.fillStyle = 'yellow';
 ctx.fillRect(0, 0, 16, 16);
-doodle.appendAnimationFrame(500);
+```
+
+除了静态图片，还可以播放动画：
+
+```js
+import PixooDoodle from './pixoo-doodle.js';
+const doodle = new PixooDoodle();
+
+const ctx = new OffscreenCanvas(doodle.width, doodle.height).getContext('2d');
+ctx.fillStyle = 'yellow';
+ctx.fillRect(0, 0, 16, 16);
+doodle.appendAnimationFrame(ctx.canvas, 500);
 ctx.fillStyle = 'red';
 ctx.fillRect(0, 0, 16, 16);
-doodle.appendAnimationFrame(500);
-doodle.animationEnd();
+doodle.appendAnimationFrame(ctx.canvas, 500);
+ctx.fillStyle = 'blue';
+ctx.fillRect(0, 0, 16, 16);
+doodle.appendAnimationFrame(ctx.canvas, 500);
+doodle.playAnimation();
 ```

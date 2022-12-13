@@ -2,7 +2,7 @@
   "name": "pixoo-doodle",
   "version": "0.0.1",
   "description": "Drawing on your pixoo-64 LED Panel with canvas.",
-  "main": "index.js",
+  "main": "dist/pixoo-doodle.js",
   "type": "module",
   "scripts": {
     "start": "npm run dev",

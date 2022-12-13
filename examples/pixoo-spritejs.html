@@ -10,9 +10,9 @@
   <script src="https://unpkg.com/spritejs@3/dist/spritejs.min.js"></script>
   <script src="http://unpkg.com/sprite-extend-3d/dist/sprite-extend-3d.js"></script>
   <div id="container" style="width:400px;height:400px"></div>
+  <canvas id="ss" width="400" height="400"></canvas>
   <script type="module">
       import PixooDoodle from './pixoo-doodle.js';
-      const p = new PixooDoodle();
 
       const {Scene} = spritejs;
       const {Camera, Mesh3d, Plane, shaders} = spritejs.ext3d;
@@ -27,24 +27,6 @@
           fov: 35,
         },
       });
-
-      const _render = layer.render;
-
-      let frames = 0;
-      const ctx = p.animationBegin();
-      layer.render = (...args) => {
-        const ret = _render.apply(layer, args);
-        if(frames < 600) {
-          frames++;
-          if(frames % 10 === 0) {
-            p.clear();
-            ctx.drawImage(layer.canvas, 0, 0, 64, 64);
-            p.appendAnimationFrame();
-          }
-          if(frames === 600) p.animationEnd();
-        }
-        return ret;
-      };
 
       layer.camera.attributes.pos = [5, 4, 10];
       layer.setOrbit();
@@ -90,13 +72,32 @@
       shadow.add(ground);
       layer.setShadow(shadow);
 
+      const stx = ss.getContext('2d');
+      const doodle = new PixooDoodle();
+      let frames = 0;
+      const maxFrame = 60;
+      const delay = 200;
       layer.tick((t) => {
         // A bit of plane animation
+        layer.render();
+        if(Math.ceil((t - 1000) / delay) > frames && frames < maxFrame) {
+          frames++;
+          console.log(frames);
+          doodle.appendAnimationFrame(layer.canvas, 100);
+          if(frames === maxFrame) {
+            console.log('sending...');
+            doodle.playAnimation();
+          }
+        }
+        stx.clearRect(0, 0, 400, 400);
+        stx.drawImage(layer.canvas, 0, 0, 400, 400);
         if(plane) {
           plane.attributes.z = Math.sin(t * 0.001);
           plane.attributes.rotateX = Math.sin(t * 0.001 + 2) * 18;
           plane.attributes.rotateY = Math.sin(t * 0.001 - 4) * -18;
         }
+      }, {
+        playbackRate: 2,
       });
   </script>
 </body>
