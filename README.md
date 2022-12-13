@@ -43,3 +43,7 @@ ctx.fillRect(0, 0, 16, 16);
 doodle.appendAnimationFrame(ctx.canvas, 500);
 doodle.playAnimation();
 ```
+
+## 参考资料
+
+[API 文档](http://doc.divoom-gz.com/web/?fbclid=IwAR2KBwT6h6FTfNDkprFvrgFrsicg6z0N7dYWNlX8qJd46T5fXkkvwJ-8Pdg#/12?page_id=143)
